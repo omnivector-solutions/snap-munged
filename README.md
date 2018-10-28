@@ -12,3 +12,10 @@ snapcraft cleanbuild
 ```
 sudo snap install munged_0.1_amd64.snap --classic --dangerous
 ```
+
+#### License
+* AGPLv3 (see `LICENSE` file)
+
+
+#### Author
+* James Beedy (c) 2018 <jamesbeedy@gmail.com>
