@@ -2,6 +2,8 @@
 
 set -eux
 
+
+################################### Create Munge Dirs ###################################
 # This directory contains the daemon's secret key. The recommended permissions for it are 0700.
 mkdir -p $SNAP_COMMON/etc/munge
 chmod -R 0700 $SNAP_COMMON/etc/munge
@@ -24,11 +26,26 @@ chmod -R 0700 $SNAP_COMMON/var/log/munge
 mkdir -p $SNAP_COMMON/var/run/munge
 chmod -R 0755 $SNAP_COMMON/var/run/munge
 
-# Create the munge key
-dd if=/dev/urandom bs=1 count=1024 > $SNAP_COMMON/etc/munge/munge.key
-chmod 0400 $SNAP_COMMON/etc/munge/munge.key
 
-# Create snap aliases
-ln -s munged.munge /snap/bin/munge
-ln -s munged.unmunge /snap/bin/unmunge
-ln -s munged.remunge /snap/bin/remunge
+#################################### Create Munge Key ###################################
+# Create the munge key if not exists
+MUNGE_KEY=$SNAP_COMMON/etc/munge/munge.key
+
+if [[ ! -f $MUNGE_KEY ]]; then
+  dd if=/dev/urandom bs=1 count=1024 > $MUNGE_KEY
+  chmod 0400 $MUNGE_KEY
+fi
+
+############################# Create Munge Exe Symlinks #################################
+# Create snap aliases for munge, unmunge, remunge if they don not exist
+if [[ ! -f /snap/bin/munge ]]; then
+  ln -s munged.munge /snap/bin/munge
+fi
+
+if [[ ! -f /snap/bin/unmunge ]]; then
+  ln -s munged.unmunge /snap/bin/unmunge
+fi
+
+if [[ ! -f /snap/bin/remunge ]]; then
+  ln -s munged.remunge /snap/bin/remunge
+fi

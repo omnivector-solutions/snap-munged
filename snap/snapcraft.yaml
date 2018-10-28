@@ -1,8 +1,8 @@
 name: munged
 version: '0.1' 
-summary: Munge
+summary: Munge authentication service.
 description: |
-  Munge
+  MUNGE (MUNGE Uid 'N' Gid Emporium) is an authentication service for creating and validating credentials. 
 
 grade: stable
 confinement: classic
