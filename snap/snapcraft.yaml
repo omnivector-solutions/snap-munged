@@ -1,0 +1,46 @@
+name: munged
+version: '0.1' 
+summary: Munge
+description: |
+  Munge
+
+grade: stable
+confinement: classic
+
+apps:
+  munged:
+    daemon: simple
+    command: wrappers/munged
+  munge:
+    command: usr/bin/munge
+  remunge:
+    command: usr/bin/remunge
+  unmunge:
+    command: usr/bin/unmunge
+
+parts:
+  munge:
+    plugin: dump
+    source: https://github.com/dun/munge.git
+    source-type: git
+    source-depth: 1
+    source-branch: master
+    build-packages:
+      - gcc
+      - libssl-dev
+      - make
+    stage:
+      - usr/
+    prime:
+      - usr/
+    override-build: |
+      snapcraftctl build
+      ./configure --prefix=$SNAPCRAFT_PART_INSTALL/usr \
+          --sysconfdir=$SNAPCRAFT_PART_INSTALL/etc \
+          --localstatedir=$SNAPCRAFT_PART_INSTALL/var
+      make
+      make install
+
+  wrappers:
+    plugin: dump
+    source: snap/wrap/

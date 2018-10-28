@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+
+exec "$SNAP/usr/sbin/munged" \
+     "--key-file=$SNAP_COMMON/etc/munge/munge.key" \
+     "--socket=$SNAP_COMMON/var/run/munge/munge.socket.2" \
+     "--pid-file=$SNAP_COMMON/var/run/munge/munged.pid" \
+     "--log-file=$SNAP_COMMON/var/log/munge/munged.log" \
+     "--seed-file=$SNAP_COMMON/var/lib/munge/munge.seed" \
+     "--num-threads=1" "--force" "--foreground" "--group-check-mtime=0" "$@"

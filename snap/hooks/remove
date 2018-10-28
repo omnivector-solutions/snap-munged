@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -eux
+
+
+# Remove symlinks
+rm /snap/bin/munge
+rm /snap/bin/unmunge
+rm /snap/bin/remunge
