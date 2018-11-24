@@ -5,12 +5,21 @@ description: |
   MUNGE (MUNGE Uid 'N' Gid Emporium) is an authentication service for creating and validating credentials. 
 
 grade: stable
-confinement: classic
+confinement: strict
+
+slots:
+  munged-socket:
+    interface: content
+    content: socket-directory
+    write: 
+      - $SNAP_DATA
 
 apps:
   munged:
     daemon: simple
     command: wrappers/munged
+    slots:
+      - munged-socket
   munge:
     command: usr/bin/munge
   remunge:
