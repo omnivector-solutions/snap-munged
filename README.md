@@ -5,17 +5,17 @@ This snap provides the `munged` daemon, and the `munge`, `unmunge`, and `remunge
 
 ### Build
 ```bash
-snapcraft cleanbuild
+snapcraft --use-lxd
 ```
 
 ### Install
 ```
-sudo snap install munged_0.1_amd64.snap --classic --dangerous
+sudo snap install munged_0.1_amd64.snap --dangerous
 ```
 
 #### License
 * AGPLv3 (see `LICENSE` file)
 
 
-#### Author
-* James Beedy (c) 2018 <jamesbeedy@gmail.com>
+#### Copyright
+* Omnivector Solutions (c) 2019 <admin@omnivector.solutions>
