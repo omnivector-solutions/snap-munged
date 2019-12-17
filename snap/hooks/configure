@@ -33,5 +33,5 @@ MUNGE_KEY=$SNAP_COMMON/etc/munge/munge.key
 
 if [[ ! -f $MUNGE_KEY ]]; then
   dd if=/dev/urandom bs=1 count=1024 > $MUNGE_KEY
-  chmod 0400 $MUNGE_KEY
 fi
+chmod 0400 $MUNGE_KEY

@@ -27,13 +27,13 @@ apps:
       - network-bind
 
   munge:
-    command: wrappers/munged
+    command: wrappers/munge
 
   unmunge:
-    command: wrappers/munged
+    command: wrappers/unmunge
 
   remunged:
-    command: wrappers/munged
+    command: wrappers/remunge
 
 parts:
   munge:
@@ -47,9 +47,9 @@ parts:
       - libssl-dev
       - autoconf
       - make
-      - bzip2
-      - zlib1g
       - libtool
+      - zlib1g-dev
+      - libbz2-dev
     stage:
       - usr/
       - var/
