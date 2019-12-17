@@ -20,8 +20,8 @@ apps:
   munged:
     daemon: simple
     command: wrappers/munged
-    #    slots:
-    #  - munged-socket
+    slots:
+      - munged-socket
     plugs:
       - network
       - network-bind
