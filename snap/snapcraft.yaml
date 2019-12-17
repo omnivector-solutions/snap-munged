@@ -1,5 +1,5 @@
 name: munge
-version: '0.1' 
+version: git
 summary: Munge authentication service.
 description: |
   MUNGE (MUNGE Uid 'N' Gid Emporium) is an authentication service for creating and validating credentials. 
