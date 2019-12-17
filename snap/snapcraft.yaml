@@ -26,6 +26,15 @@ apps:
       - network
       - network-bind
 
+  munge:
+    command: wrappers/munged
+
+  unmunge:
+    command: wrappers/munged
+
+  remunged:
+    command: wrappers/munged
+
 parts:
   munge:
     plugin: dump
