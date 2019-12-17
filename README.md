@@ -1,4 +1,4 @@
-# snap-munged
+# snap-munge
 
 This snap provides the `munged` daemon, and the `munge`, `unmunge`, and `remunge` executables.
 
@@ -10,7 +10,7 @@ snapcraft --use-lxd
 
 ### Install
 ```
-sudo snap install munged_0.1_amd64.snap --dangerous
+sudo snap install munge_*.snap --dangerous
 ```
 
 #### License
