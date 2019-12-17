@@ -7,6 +7,8 @@ description: |
 grade: stable
 confinement: strict
 
+base: core18
+
 slots:
   munged-socket:
     interface: content
@@ -18,14 +20,11 @@ apps:
   munged:
     daemon: simple
     command: wrappers/munged
-    slots:
-      - munged-socket
-  munge:
-    command: usr/bin/munge
-  remunge:
-    command: usr/bin/remunge
-  unmunge:
-    command: usr/bin/unmunge
+    #    slots:
+    #  - munged-socket
+    plugs:
+      - network
+      - network-bind
 
 parts:
   munge:
@@ -37,19 +36,29 @@ parts:
     build-packages:
       - gcc
       - libssl-dev
+      - autoconf
       - make
+      - bzip2
+      - zlib1g
+      - libtool
     stage:
       - usr/
+      - var/
+      - etc/
     prime:
       - usr/
+      - etc/
+      - var/
     override-build: |
       snapcraftctl build
+      ./bootstrap
       ./configure --prefix=$SNAPCRAFT_PART_INSTALL/usr \
           --sysconfdir=$SNAPCRAFT_PART_INSTALL/etc \
-          --localstatedir=$SNAPCRAFT_PART_INSTALL/var
+          --localstatedir=$SNAPCRAFT_PART_INSTALL/var \
+          --libdir=$SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu
       make
       make install
 
   wrappers:
     plugin: dump
-    source: snap/wrap/
+    source: wrap/

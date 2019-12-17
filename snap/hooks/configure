@@ -35,17 +35,3 @@ if [[ ! -f $MUNGE_KEY ]]; then
   dd if=/dev/urandom bs=1 count=1024 > $MUNGE_KEY
   chmod 0400 $MUNGE_KEY
 fi
-
-############################# Create Munge Exe Symlinks #################################
-# Create snap aliases for munge, unmunge, remunge if they don not exist
-if [[ ! -f /snap/bin/munge ]]; then
-  ln -s munged.munge /snap/bin/munge
-fi
-
-if [[ ! -f /snap/bin/unmunge ]]; then
-  ln -s munged.unmunge /snap/bin/unmunge
-fi
-
-if [[ ! -f /snap/bin/remunge ]]; then
-  ln -s munged.remunge /snap/bin/remunge
-fi
