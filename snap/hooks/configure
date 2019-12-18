@@ -2,36 +2,20 @@
 
 set -eux
 
+munge_key=$(snapctl get munge.key)
+munge_key_file=$SNAP_COMMON/etc/munge/munge.key
 
-################################### Create Munge Dirs ###################################
-# This directory contains the daemon's secret key. The recommended permissions for it are 0700.
-mkdir -p $SNAP_COMMON/etc/munge
-chmod -R 0700 $SNAP_COMMON/etc/munge
-
-# This directory contains the daemon's PRNG seed file. It is also where the daemon
-# creates pipes for authenticating clients via file-descriptor-passing. If the
-# file-descriptor-passing authentication method is being used, this directory must
-# allow execute permissions for all; however, it should not expose read permissions.
-# The recommended permissions for it are 0711.
-mkdir -p $SNAP_COMMON/var/lib/munge
-chmod -R 0711 $SNAP_COMMON/var/lib/munge
-
-# This directory contains the daemon's log file. The recommended permissions for it are 0700.
-mkdir -p $SNAP_COMMON/var/log/munge
-chmod -R 0700 $SNAP_COMMON/var/log/munge
-
-# This directory contains the Unix domain socket for clients to communicate with the daemon.
-# It also contains the daemon's pid file. This directory must allow execute permissions for all.
-# The recommended permissions for it are 0755.
-mkdir -p $SNAP_COMMON/var/run/munge
-chmod -R 0755 $SNAP_COMMON/var/run/munge
-
-
-#################################### Create Munge Key ###################################
-# Create the munge key if not exists
-MUNGE_KEY=$SNAP_COMMON/etc/munge/munge.key
-
-if [[ ! -f $MUNGE_KEY ]]; then
-  dd if=/dev/urandom bs=1 count=1024 > $MUNGE_KEY
+if [[ ! -z $munge_key && ! -f $munge_key_file ]]; then
+    echo "munge.key is empty"
+    dd if=/dev/urandom bs=1 count=1024 > $munge_key_file
+else
+    if [[ -f $munge_key_file ]]; then
+        chmod 0777 $munge_key_file
+    fi
+    echo -n "$munge_key" | sha512sum | cut -d' ' -f1 > $munge_key_file
 fi
-chmod 0400 $MUNGE_KEY
+
+chmod 0400 $munge_key_file
+snapctl restart munge.munged
+
+exit 0
